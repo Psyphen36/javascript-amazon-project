@@ -1,21 +1,20 @@
-import { cart, removeCart } from "../scripts/cart.js";
+import { cart, removeCart, checkoutItem } from "../scripts/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
 let cartSummaryHTML = '';
-
 cart.forEach(cartItem => {
-    const productId = cartItem.productId;
-
-    let matchingProduct;
-
-    products.forEach(product => {
-        if (product.id === productId) {
-            matchingProduct = product;
-        }
-    });
-
-    let cartQuantity = 0;
+  const productId = cartItem.productId;
+  
+  let matchingProduct;
+  
+  products.forEach(product => {
+    if (product.id === productId) {
+      matchingProduct = product;
+    }
+  });
+  
+  let cartQuantity = 0;
     cart.forEach(item => {
       cartQuantity += (item.quantity);
     });
@@ -95,10 +94,11 @@ cart.forEach(cartItem => {
       </div>
     </div>
   </div>`;
-
+  checkoutItem(cartQuantity);
 });
 
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+
 
 document.querySelectorAll('.js-delete-quantity').forEach(delButton => {
   delButton.addEventListener('click', () => {
@@ -106,9 +106,10 @@ document.querySelectorAll('.js-delete-quantity').forEach(delButton => {
     console.log('delete');
     // console.log(productId);
     removeCart(productId);
-
+    
     const removeCartElement = document.querySelector(`.js-cart-container-${productId}`)
     
     removeCartElement.remove();
   })
-})
+});
+
