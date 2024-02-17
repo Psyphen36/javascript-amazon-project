@@ -4,15 +4,19 @@ if (!cart) {
   cart = [{
     productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     quantity: 2,
+    deliveryOptionId: '1'
   }, {
     productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
     quantity: 1,
+    deliveryOptionId: '2'
   }];
 };
 
 function saveCartData() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
+
+let cartQuantityElement = document.querySelector('.js-cart-quantity');
 export function addCart() {
   document.querySelectorAll('.js-addCart').forEach((buttons) => {
     buttons.addEventListener('click', () => {
@@ -30,7 +34,8 @@ export function addCart() {
     } else{
       cart.push({
         productId: productId,
-        quantity: 1
+        quantity: 1,
+        deliveryOptionId: '1'
       });
     }
     
@@ -39,7 +44,8 @@ export function addCart() {
       cartQuantity += (item.quantity);
     });
     
-    document.querySelector('.js-cart-quantity').textContent = cartQuantity;
+
+    cartQuantityElement.textContent = cartQuantity;
 
     saveCartData();
 
@@ -72,8 +78,7 @@ export function removeCart(productId) {
   saveCartData();
 }
 
-export function checkoutItem(cartQuantity, removeItem=0) {
-
+export function checkoutItem(cartQuantity) {
   const checkoutItem = document.querySelector('.js-checkout-item')
-  checkoutItem.textContent = (cartQuantity - removeItem) + ' items';
+  checkoutItem.textContent = cartQuantity + ' items';
 }
