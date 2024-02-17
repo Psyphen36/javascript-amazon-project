@@ -1,7 +1,9 @@
+import { products } from '../data/products.js';
+import { addCart } from '../scripts/cart.js';
 
 let HTMLData = '';
 
-products.forEach((product) => {
+products.forEach((product, index) => {
   HTMLData += `<div class="product-container">
     <div class="product-image-container">
       <img class="product-image"
@@ -21,11 +23,12 @@ products.forEach((product) => {
     </div>
 
     <div class="product-price">
-      $${product.priceCents / 100}
+      $${(product.priceCents / 100).toFixed(2)}
     </div>
 
     <div class="product-quantity-container">
-      <select>
+      <select class="js-quantity-selector-${product.id}"
+      data-selector="${product.id}">
         <option selected value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -41,7 +44,8 @@ products.forEach((product) => {
 
     <div class="product-spacer"></div>
 
-    <div class="added-to-cart">
+    <div class="added-to-cart js-added-message"
+    data-show-message="${product.id}">
       <img src="images/icons/checkmark.png">
       Added
     </div>
@@ -55,27 +59,21 @@ products.forEach((product) => {
 });
 document.querySelector('.js-grid-container').innerHTML = HTMLData;
 
-document.querySelectorAll('.js-addCart').forEach((buttons) => {
-  buttons.addEventListener('click', () => {
-    const productId = buttons.dataset.productId;
-    let matchingItem;
+addCart();
 
-    cart.forEach(item => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-      });
+//! a dropdown quantity selector but right now it didn't work
+// function cartSelectElement() {
+// products.forEach(product => {
+//   const quantitySelector = document.querySelector(`.js-quantity-selector-${product.id}`);
+  
+//   quantitySelector.addEventListener('click', () => {
+//     console.log(quantitySelector.value);
+//     return quantitySelector.value;
+    
+//   });
+// });
+// };
 
-    if (matchingItem) {
-      matchingItem.quantity++;
-    } else{
-        cart.push({
-          productId: productId,
-          quantity: 1
-        });
-      }
+// const testingCart = cartSelectElement();
+// console.log(testingCart);
 
-    let cartQuantity = 
-    console.log('cart items',cart);
-  })
-})

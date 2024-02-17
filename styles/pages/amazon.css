@@ -148,7 +148,9 @@
   height: 20px;
   margin-right: 5px;
 }
-
+.js-message {
+  opacity: 10;
+}
 .add-to-cart-button {
   width: 100%;
   padding: 8px;
