@@ -82,3 +82,16 @@ export function checkoutItem(cartQuantity) {
   const checkoutItem = document.querySelector('.js-checkout-item')
   checkoutItem.textContent = cartQuantity + ' items';
 }
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  let matchingItem;
+
+  cart.forEach(item => {
+    if (productId === item.productId) {
+      matchingItem = item;
+    }
+  });
+  matchingItem.deliveryOptionId = deliveryOptionId;
+
+  saveCartData();
+}
