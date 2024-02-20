@@ -95,4 +95,5 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
   matchingItem.deliveryOptionId = deliveryOptionId;
 
   saveCartData();
+  return matchingItem;
 }

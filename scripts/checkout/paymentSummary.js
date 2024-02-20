@@ -1,18 +1,20 @@
-import { cart } from "../cart.js"
+import { cart } from "../../data/cart.js"
 import { getProduct } from "../../data/products.js";
-import { getDeliveryOption } from "../deliverOptions.js";
+import { getDeliveryOption } from "../../data/deliverOptions.js";
 import { formatCurrency } from "../utils/money.js";
 
 export function renderPaymentSummary() {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
-  const estimatedTax = 477;
 
   cart.forEach(cartItem => {
-    const product = getProduct(cartItem.productId)
+    const product = getProduct(cartItem.productId);
+
     productPriceCents += product.priceCents * cartItem.quantity;
+
     const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
-    shippingPriceCents = deliveryOption.priceCents;
+
+    shippingPriceCents += deliveryOption.priceCents;
   });
 
   const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
@@ -41,7 +43,7 @@ export function renderPaymentSummary() {
   
   <div class="payment-summary-row">
     <div>Estimated tax (10%):</div>
-    <div class="payment-summary-money">$${formatCurrency(estimatedTax)}</div>
+    <div class="payment-summary-money">$${formatCurrency(taxCents)}</div>
   </div>
   
   <div class="payment-summary-row total-row">
