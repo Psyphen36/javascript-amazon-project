@@ -84,6 +84,7 @@ export function checkoutItem(cartQuantity) {
 }
 
 export function updateDeliveryOption(productId, deliveryOptionId) {
+
   let matchingItem;
 
   cart.forEach(item => {
